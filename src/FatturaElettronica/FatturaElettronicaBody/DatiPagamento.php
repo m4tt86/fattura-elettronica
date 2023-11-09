@@ -22,6 +22,7 @@ class DatiPagamento extends XmlRepeatedBlock
     public $iban;
     public $istitutoFinanziario;
     public $condizioniPagamento;
+    public $beneficiario;
 
     /**
      * DatiPagamento constructor.
@@ -31,6 +32,7 @@ class DatiPagamento extends XmlRepeatedBlock
      * @param string | null $iban
      * @param string | null $istitutoFinanziario
      * @param string $condizioniPagamento
+     * @param string $beneficiario
      */
     public function __construct(
         $modalitaPagamento,
@@ -38,7 +40,8 @@ class DatiPagamento extends XmlRepeatedBlock
         $importoPagamento,
         $iban = null,
         $istitutoFinanziario = null,
-        $condizioniPagamento = 'TP02'
+        $condizioniPagamento = 'TP02',
+        $beneficiario = null
     ) {
         $this->modalitaPagamento = $modalitaPagamento;
         $this->dataScadenzaPagamento = $dataScadenzaPagamento;
@@ -46,6 +49,7 @@ class DatiPagamento extends XmlRepeatedBlock
         $this->iban = $iban;
         $this->istitutoFinanziario = $istitutoFinanziario;
         $this->condizioniPagamento = $condizioniPagamento;
+        $this->beneficiario = $beneficiario;
         parent::__construct();
     }
 
@@ -60,6 +64,9 @@ class DatiPagamento extends XmlRepeatedBlock
             $writer->startElement('DatiPagamento');
             $writer->writeElement('CondizioniPagamento', $block->condizioniPagamento);
             $writer->startElement('DettaglioPagamento');
+            if ($block->beneficiario) {
+                $writer->writeElement('Beneficiario', $block->beneficiario);
+            }
             $writer->writeElement('ModalitaPagamento', $block->modalitaPagamento);
             if ($block->dataScadenzaPagamento) {
                 $writer->writeElement('DataScadenzaPagamento', $block->dataScadenzaPagamento);
