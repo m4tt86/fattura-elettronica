@@ -64,7 +64,7 @@ class DatiRiepilogo implements XmlSerializableInterface, \Countable, \Iterator
     {
         /** @var DatiRiepilogo $block */
         foreach ($this as $block) {
-            $natura = $block->natura;
+            $natura = (isset($block->xmlFields['Natura'])) ? true : false;
             $writer->startElement('DatiRiepilogo');
             $writer->writeElement('AliquotaIVA', fe_number_format($block->aliquotaIVA, 2));
             $block->writeXmlField('Natura', $writer);
